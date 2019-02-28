@@ -13,20 +13,17 @@ script:
 - cd ${TRAVIS_BUILD_DIR}/DualBootPatcher2/
 - "docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v \"$(pwd):/builder/DualBootPatcher2:rw,z\"
   -v \"${HOME}/.android:/builder/.android:rw,z\" silverx2222/dualbootpatcher:9.3.0-14-android
-  bash << EOF  \ncd ~/DualBootPatcher2/builder\ncmake .. -DMBP_BUILD_TARGET=android  && make -j16 && rm -rf assets && cpack &&  make apk -j16\n"
+  bash << EOF  \ncd ~/DualBootPatcher2/builder\ncmake .. -DMBP_BUILD_TARGET=android
+  \ && make -j16 && rm -rf assets && cpack &&  make apk -j16\n"
 before_deploy:
-  # Set up git user name and tag this commit
-  - git config --local user.name silverx2222
-  - git config --local user.email silverx2222@gmail.com
-  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%H%M%S')-debug}
-  - git tag $TRAVIS_TAG --force
+- git config --local user.name silverx2222
+- git config --local user.email silverx2222@gmail.com
+- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%H%M%S')-debug}
+- git tag $TRAVIS_TAG --force
 deploy:
   provider: releases
   api_key:
-    secure: nnhnKjxDCAeFqAyCJjZvxcf3I0UIUoXadWfJmBcnWmQRwcOW3dh39KqQiIN0aD1NRyMkX8jW/Nq1fRpiiq5yKtDas+kfLE5C3vx4HEx8uYAwZCONMw6SxMbwCaIP+CxAD1UN8ZyzT+dBhpkGvKYxkGqAYbaoR0z/7pauudm41DVcRBeYsLJL9k6KDZGGD7tkxgtk937csanM+evzx3ZEpOoN9IO8ou/ugkRj7Tm10wJF1yQchoP1fzWyzW8ID+JUwn/gjz0xeC9/1/2x6mLPmaRctsWuRZHgSa/ReyXMMsu+V9al3kznsiGsg2uvF9sCsT8ohzTTBv0NKfIKlIS4MN2iCQYBoxwCzR3rMrHkrKntvSlki2antLI2qad6ZB0jJHTgACwITLkSfduaJYyf2ZAy1LAb7jsK1XPp2zNVOYRMXSGbBNypwLQX3cVDUuafOY31xpi2vvbFuxy8q2PG7Jdb78a7uQHR+fqLWG8VnPOPputdZzhPVydlJ7u4XiJme0PP6PyRLRZjb/1BUKmN0FtbRvqWyla/aGCbf0vx9ZLeFbZnn64SKmEzu10eqP02lJHtjvvHP6QGvhcN0Mq2nlmcc4wy0bLtrxOijcsSKMMKhXwK3GhcfmmHgc+SJgumkbUI9DmNGJH1k+RYpmx0G8ii1gnHi37xu0nJqvV7BBw=
-  file: "${TRAVIS_BUILD_DIR}/DualBootPatcher2/Android_GUI/build/outputs/apk/release/Android_GUI-release.apk"
-  skip_cleanup: true
+    secure: GnrKAWfGKakBZ8AD4fGedFp3NqOYzkUdhD7PR35mEouXP8v/pm7h1IkDr/+Uk8lVlNkCYSab6fQ178BfTyeIY6edUke+wkbS/FpbEoqh6mF2sGum28LT9wR1D3o92jQkDE711NwBYalKbZHJ2vDyZq6VvH9OhPoZECDLK1YqsACeIzfKE8gtvDRxN5mg+iBb6dT0Da9AQNvzLMLL8qOVb5+joDs99OuuRGfuD3CtXnjvkpAO44p+W3eyZ7hKKVeChZw7i9Di/1Gtr9NY6L+KHvNil53KeARlhHFH17BpobOGS7Crl7EIlbSzTtCpkdcn0DxxDIHPgbsFsL/5kwWFoPiIitqZzP2MEMeb86sG4Mi1eYneR5pEbZLNXQHkPEAFK85lijaoLihSrvnId556QC0Mh1J+fxQcw/zOn07VdmD+wvgwYs4bCDrLJPPHNtFP7SNGqzkEUv7hZ+ld9kZBTTAxiZCn9texsudvamyPoerTQ7kkwNplwrywEzyCEUTOCSj7VxUepMzyoR6pAWbIKadXr7fGaJT0M6/UEVJNx8f+Nxh0Ww+zQQaeaD8K38+HCZGXzgZ6PI1kQjrzhfFI9/xVjnGSq5WFp3QPPd6diIJGkitnwR/Dy2mhLJim1s0pczlvrYGhZm3dxDa03QqyQ5RBAZDsa4nc2XEkrd0yo+w=
+  file: "${TRAVIS_BUILD_DIR}/DualBootPatcher2/Android_GUI/build/outputs/apk/debug/Android_GUI-debug.apk"
   on:
-    all_branches: true 
     repo: silverx2222/DualBootPatcher2
-
