@@ -16,7 +16,7 @@ script:
 - "docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v \"$(pwd):/builder/DualBootPatcher2:rw,z\"
   -v \"${HOME}/.android:/builder/.android:rw,z\" silverx2222/dualbootpatcher:9.3.0-14-android
   bash << EOF  \ncd ~/DualBootPatcher2/builder\nsed \ -e "s,@REPLACE_ME_KEYSTORE_PATH@,${silverx2222.keystore},g" \ -e "s,@REPLACE_ME_KEYSTORE_PASSPHRASE@,${keystore_password},g" \ -e "s,@REPLACE_ME_KEY_ALIAS@,${keystore_alias},g" \ -e "s,@REPLACE_ME_KEY_PASSPHRASE@,${keystore_alias_password},g" \ < cmake/SigningConfig.prop.in \ > cmake/SigningConfig.prop\ncmake .. -DMBP_BUILD_TARGET=android -DMBP_BUILD_TYPE=release -DMBP_SIGN_CONFIG_PATH=../cmake/SigningConfig.prop cmake .. -DMBP_BUILD_TARGET=android
-  \ && make -j16 && rm -rf assets && cpack &&  make apk -j16\n"
+  \ && make -j16 && rm -rf assets && cpack &&  make apk\n"
 before_deploy:
 - git config --local user.name silverx2222
 - git config --local user.email silverx2222@gmail.com
