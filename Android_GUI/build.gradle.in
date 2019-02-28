@@ -91,7 +91,6 @@ android {
 
             matchingFallbacks = ['release']
         }
-    }
 
     def isRunningOnTravis = System.getenv("CI") == "true"
 
