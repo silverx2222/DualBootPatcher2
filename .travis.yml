@@ -10,7 +10,7 @@ before_install:
 - docker pull silverx2222/dualbootpatcher:9.3.0-14-android
 script:
 - mkdir $HOME/.android
-- cd ${TRAVIS_BUILD_DIR}/DualBootPatcher2/
+- mkdir -p ${TRAVIS_BUILD_DIR}/DualBootPatcher2/builder/ && cd ${TRAVIS_BUILD_DIR}/DualBootPatcher2/
 - "docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v \"$(pwd):/builder/DualBootPatcher2:rw,z\"
   -v \"${HOME}/.android:/builder/.android:rw,z\" silverx2222/dualbootpatcher:9.3.0-14-android
   bash << EOF  \ncd ~/DualBootPatcher2/builder\ncmake .. -DMBP_BUILD_TARGET=android  && make -j16 && rm -rf assets && cpack &&  make apk -j16\n"
