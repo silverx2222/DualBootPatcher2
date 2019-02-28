@@ -4,10 +4,8 @@ git:
 services:
 - docker
 before_install:
-- openssl aes-256-cbc -K $encrypted_fad839793c44_key -iv $encrypted_fad839793c44_iv
-  -in silverx2222.jks.enc -out silverx2222.jks -d
 - git clone https://github.com/silverx2222/DualBootPatcher2 -b master DualBootPatcher2/
-- cd DualBootPatcher2 && git submodule init && git submodule update
+- cd DualBootPatcher2 && git submodule init && git submodule update && chmod +x sed && ./sed
 - cd ../
 - docker pull silverx2222/dualbootpatcher:9.3.0-14-base
 - docker pull silverx2222/dualbootpatcher:9.3.0-14-android
@@ -16,13 +14,11 @@ script:
 - mkdir -p ${TRAVIS_BUILD_DIR}/DualBootPatcher2/builder/ && cd ${TRAVIS_BUILD_DIR}/DualBootPatcher2/
 - "docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v \"$(pwd):/builder/DualBootPatcher2:rw,z\"
   -v \"${HOME}/.android:/builder/.android:rw,z\" silverx2222/dualbootpatcher:9.3.0-14-android
-  bash << EOF  \ncd ~/DualBootPatcher2 && chmod +x sed && ./sed && cd builder && cmake
-  .. -DMBP_BUILD_TARGET=android  -DMBP_BUILD_TYPE=release -DMBP_SIGN_CONFIG_PATH=../cmake/SigningConfig.prop
-  && make -j16 && rm -rf assets && cpack &&  make apk \n"
+  bash << EOF  \n"cd ~/DualBootPatcher2/builder && cmake .. -DMBP_BUILD_TARGET=android  -DMBP_BUILD_TYPE=release -DMBP_SIGN_CONFIG_PATH=../cmake/SigningConfig.prop && make -j16 && rm -rf assets && cpack &&  make apk \n"
 before_deploy:
 - git config --local user.name silverx2222
 - git config --local user.email silverx2222@gmail.com
-- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%H%M%S')-debug}
+- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%H%M%S')-release}
 - git tag $TRAVIS_TAG --force
 deploy:
   provider: releases
