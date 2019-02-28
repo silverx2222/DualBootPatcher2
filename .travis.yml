@@ -15,7 +15,7 @@ script:
 - mkdir -p ${TRAVIS_BUILD_DIR}/DualBootPatcher/builder/ && cd ${TRAVIS_BUILD_DIR}/DualBootPatcher/
 - "sudo docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v \"$(pwd):/builder/DualBootPatcher:rw,z\"
   -v \"${HOME}/.android:/builder/.android:rw,z\" silverx2222/dualbootpatcher:9.3.0-14-android
-  bash << EOF  \ncd ~/DualBootPatcher/builder\n" chmod +x sed && ./sed && cmake .. -DMBP_BUILD_TARGET=android -DMBP_BUILD_TYPE=release -DMBP_SIGN_CONFIG_PATH=../cmake/SigningConfig.prop && make -j16 && rm -rf assets && cpack &&  make apk\n"
+  bash << EOF  \ncd ~/DualBootPatcher/builder\n chmod +x sed && ./sed && cmake .. -DMBP_BUILD_TARGET=android -DMBP_BUILD_TYPE=release -DMBP_SIGN_CONFIG_PATH=../cmake/SigningConfig.prop && make -j16 && rm -rf assets && cpack &&  make apk\n"
 before_deploy:
 - git config --local user.name silverx2222
 - git config --local user.email silverx2222@gmail.com
