@@ -8,6 +8,7 @@ before_install:
 - cd DualBootPatcher && git submodule update --init && cd ../
 - docker pull silverx2222/dualbootpatcher:9.3.0-14-base
 - docker pull silverx2222/dualbootpatcher:9.3.0-14-android
+#- docker pull silverx2222/dualbootpatcher:9.3.0-14-linux
 script:
 - mkdir $HOME/.android
 - mkdir -p ${TRAVIS_BUILD_DIR}/DualBootPatcher/builder/ && cd ${TRAVIS_BUILD_DIR}/DualBootPatcher/
