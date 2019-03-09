@@ -5,7 +5,8 @@ services:
 
 before_install:
   # Clone DualBootPatcher Repository
-  - git clone --recursive https://github.com/silverx2222/DualBootPatcher -b master DualBootPatcher/
+  - git clone https://github.com/silverx2222/DualBootPatcher -b master DualBootPatcher/
+  - cd DualBootPatcher && git submodule update --init && cd ../
   # Pull docker images
   - docker pull yshalsager/dualbootpatcher:9.3.0-7-base
   - docker pull yshalsager/dualbootpatcher:9.3.0-7-android
